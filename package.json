@@ -1,0 +1,10 @@
+{
+  "name": "cocaelum-api",
+  "version": "0.0.1",
+  "description": "Apollo GraphQL API server for Cocaelum",
+  "main": "server.js",
+  "repository": "https://github.com/landofhere/cocaelum-api.git",
+  "author": "Barry Low",
+  "license": "mpl-2.0",
+  "private": false
+}
