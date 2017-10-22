@@ -13,17 +13,21 @@
     "Apollo"
   ],
   "scripts": {
-    "start": "nodemon ./server.js --exec babel-node",
+    "start": "nodemon src/index.js --watch src --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --fix --ext .js pages components containers libraries server helper_scripts"
   },
   "dependencies": {
     "apollo-server-express": "^1.1.6",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dataloader": "^1.3.0",
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "graphql": "^0.11.7",
     "graphql-tools": "^2.5.0",
-    "graphql-type-json": "^0.1.4"
+    "graphql-type-json": "^0.1.4",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
