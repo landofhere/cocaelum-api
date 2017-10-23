@@ -12,6 +12,14 @@
     "Express",
     "Apollo"
   ],
+  "engines": {
+    "node": "8.x.x"
+  },
+  "now": {
+    "engines": {
+      "node": "8.x.x"
+    }
+  }
   "scripts": {
     "start": "nodemon src/index.js --watch src --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
