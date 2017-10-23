@@ -13,7 +13,8 @@
   ],
   "plugins": [
     "prettier",
-    "import"
+    "import",
+    "markdown"
   ],
   "globals": {
     "document": true,
