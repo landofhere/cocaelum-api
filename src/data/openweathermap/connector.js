@@ -3,8 +3,7 @@ import DataLoader from 'dataloader';
 
 import logger from '../../logger';
 
-import OPENWEATHER_API_KEY from './openWeatherMapKey';
-
+const { OPENWEATHER_API_KEY } = process.env;
 const OPENWEATHERMAP_API_ROOT = 'https://api.openweathermap.org/data/2.5/';
 const UNITS = 'imperial';
 

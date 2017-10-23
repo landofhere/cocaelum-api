@@ -1,0 +1,5 @@
+{
+  "env": {
+    "OPENWEATHER_API_KEY": "YOUR-API-KEY"
+  }
+}
