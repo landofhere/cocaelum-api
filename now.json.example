@@ -1,5 +1,8 @@
 {
   "env": {
     "OPENWEATHER_API_KEY": "YOUR-API-KEY"
+  },
+  "engines": {
+    "node": "8.x.x"
   }
 }
