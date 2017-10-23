@@ -1,5 +1,3 @@
-import { currentWeathers } from './owmConnector';
-
 export const schema = [
   `
 # A repository object from the GitHub API. This uses the exact field names returned by the
@@ -37,11 +35,11 @@ type Query {
 
 export const resolvers = {
   Query: {
-    getWeatherByCity(root, { city }) {
-      return currentWeathers(city);
+    getWeatherByCity(root, { city }, context) {
+      return context.CurrentWeathers.getWeatherByCity(city);
     },
-    getWeatherByID(root, { id }) {
-      return currentWeathers(id);
+    getWeatherByID({ id }, _, context) {
+      return context.CurrentWeathers.getWeatherByID(id);
     }
   }
 };

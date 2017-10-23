@@ -1,4 +1,4 @@
-export default class CurrentWeather {
+export class CurrentWeathers {
   constructor({ connector }) {
     this.connector = connector;
   }
@@ -19,3 +19,5 @@ export default class CurrentWeather {
     return this.connector.get(`weather?zip=${zip},${country} `);
   }
 }
+
+export default CurrentWeathers;

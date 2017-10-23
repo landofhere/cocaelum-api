@@ -1,8 +1,9 @@
 import rp from 'request-promise';
 import DataLoader from 'dataloader';
+
+import logger from '../../logger';
+
 import OPENWEATHER_API_KEY from './openWeatherMapKey';
-// Keys are GitHub API URLs, values are { etag, result } objects
-const eTagCache = {};
 
 const OPENWEATHERMAP_API_ROOT = 'https://api.openweathermap.org/data/2.5/';
 const UNITS = 'imperial';
@@ -10,7 +11,11 @@ const UNITS = 'imperial';
 export class OpenWeatherMapConnector {
   constructor() {
     // Allow mocking request promise for tests
+    this.url = OPENWEATHERMAP_API_ROOT;
+    this.units = UNITS;
+    this.key = OPENWEATHER_API_KEY;
     this.rp = rp;
+
     if (OpenWeatherMapConnector.mockRequestPromise) {
       this.rp = OpenWeatherMapConnector.mockRequestPromise;
     }
@@ -19,8 +24,8 @@ export class OpenWeatherMapConnector {
       batch: false
     });
   }
+
   fetch(urls) {
-    console.log(`fetch:$urls`); // eslint-disable-line no-console
     const options = {
       json: true,
       resolveWithFullResponse: true
@@ -28,31 +33,23 @@ export class OpenWeatherMapConnector {
 
     return Promise.all(
       urls.map(url => {
-        const cachedRes = eTagCache[url];
-
-        if (cachedRes && cachedRes.eTag) {
-          options.headers['If-None-Match'] = cachedRes.eTag;
-        }
+        logger.debug(`owmConnector Promise: ${url}`);
         return new Promise(resolve => {
-          this.rp({
-            uri: url,
+          rp({
+            url,
             ...options
           })
-            .then(({ responseBody, headers }) => {
-              const body = responseBody;
-              eTagCache[url] = {
-                result: body,
-                eTag: headers.etag
-              };
+            .then(response => {
+              const { body } = response;
               resolve(body);
             })
             .catch(err => {
               if (err.statusCode === 304) {
-                resolve(cachedRes.result);
+                logger.debug(`owmConnector 304 error: ${err}`);
+                resolve(err);
               } else {
-                // We need better error handling on the client, for now
-                // just return null if GitHub can't find something
-                resolve(null);
+                logger.debug(`owmConnector other error: ${err}`);
+                resolve('connector error');
               }
             });
         });
@@ -61,17 +58,9 @@ export class OpenWeatherMapConnector {
   }
 
   get(path) {
-    // eslint-disable-next-line no-console
-    console.log(`${OPENWEATHERMAP_API_ROOT}
-    ${path}
-    &units=${UNITS}
-    &appid=${this.accessToken}`);
-    return this.loader.load(
-      `${OPENWEATHERMAP_API_ROOT}
-      ${path}
-      &units=${UNITS}
-      &appid=${OPENWEATHER_API_KEY}`
-    );
+    const uri = `${this.url}${path}&units=${this.units}&appid=${this.key}`;
+    logger.debug(`owmConnector url: ${uri}`);
+    return this.loader.load(uri);
   }
 }
 
