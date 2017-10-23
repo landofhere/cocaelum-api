@@ -1,8 +1,9 @@
 {
   "env": {
-    "OPENWEATHER_API_KEY": "YOUR-API-KEY"
+    "OPENWEATHER_API_KEY": "now-secret"
   },
   "engines": {
     "node": "8.x.x"
-  }
+  },
+  "alias": "cocaelum-api"
 }
