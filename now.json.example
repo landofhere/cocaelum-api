@@ -1,6 +1,6 @@
 {
   "env": {
-    "OPENWEATHER_API_KEY": "now-secret"
+    "OPENWEATHER_API_KEY": "now-secret" //https://zeit.co/docs/features/env-and-secrets#securing-env-variables-using-secrets
   },
   "engines": {
     "node": "8.x.x"
